@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Login | Rice Moisture Monitor</title>
+ <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-image: url('graphic-node-dm-9lIgr_K0-unsplash.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-container {
+      background-color: rgba(165, 107, 42, 0.95); /* Coklat transparan */
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      width: 350px;
+    }
+
+    .login-container h1 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .login-container p {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 30px;
+    }
+
+    label {
+      color: #fff;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #a35e00;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    input::placeholder {
+      color: #fff;
+      opacity: 0.8;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    .btn-login {
+      background-color: #28a745;
+    }
+
+    .btn-signup {
+      background-color: #dc3545;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Rice Moisture</h1>
+    <p>Sistem Monitoring Kadar Air Pada Beras</p>
+
+    <form>
+      <label for="username">Username</label>
+      <input type="text" id="username" placeholder="Masukkan username">
+
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Masukkan password">
+
+      <div class="button-group">
+        <button type="button" class="btn btn-signup"onclick="window.location.href='1-1signup.html'">Sign Up</button>
+        <button type="submit" class="btn btn-login">Login</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
