@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grafik dan Laporan | Rice Moisture Monitoring</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('graphic-node-dm-9lIgr_K0-unsplash.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #2e2e2e;
+    }
+
+    .background-wrapper {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: url('graphic-node-dm-9lIgr_K0-unsplash.jpg') no-repeat center center fixed;
+      background-size: cover;
+      z-index: -2;
+    }
+
+    .overlay {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.4);
+      z-index: -1;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .sidebar {
+      width: 240px;
+      background-color: #a58b21;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .sidebar .logo {
+      font-weight: bold;
+      font-size: 20px;
+      margin-bottom: 40px;
+      color: #4d0f0f;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #4d0f0f;
+      border-radius: 20px;
+      text-align: left;
+    }
+
+    .sidebar a:hover, .sidebar a.active {
+      background-color: #a03030;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header .user-info {
+      text-align: right;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      color: #1f1f1f;
+    }
+
+    .chart-container {
+      margin-top: 40px;
+      background-color: rgba(255,255,255,0.9);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .chart-container h2 {
+      color: #4d0f0f;
+      margin-bottom: 20px;
+    }
+
+    .chart-buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .chart-buttons button {
+      padding: 10px 20px;
+      background-color: #4d0f0f;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .chart-buttons button:hover {
+      background-color: #a03030;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="background-wrapper">
+    <div class="overlay"></div>
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
+      <div class="logo">RM <br><span style="font-weight: normal; font-size: 14px;">Rice Moisture<br>Online Monitoring System</span></div>
+      <a href="2home.html">🏠 Home</a>
+      <a href="3datasensor.html">📊 Data Sensor</a>
+      <a href="4monitoring.html">📡 Monitoring Langsung</a>
+      <a href="5grafik.html" class="active">📈 Grafik dan Laporan</a>
+      <a href="6tentang-1.html">ℹ️ Tentang</a>
+      <a href="1login.html">🚪 Logout</a>
+    </div>
+
+    <div class="main-content">
+      <div class="header">
+        <h1>Sistem Pengukuran Kadar Air Beras</h1>
+        <div class="user-info">
+          <p><strong>User Admin</strong></p>
+          <small>CEO</small>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <h2>Grafik dan Laporan</h2>
+        <canvas id="moistureChart" height="100"></canvas>
+        <div class="chart-buttons">
+          <button onclick="updateChart()">
+		  <img src="refreshlogo.png" alt="Perbarui" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px;">
+		  Perbarui Data
+		</button>
+
+		<button onclick="window.print()">
+		  <img src="unduhlogo.png" alt="Unduh" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px;">
+		  Unduh PDF
+		</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('moistureChart').getContext('2d');
+    const moistureChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['30/11', '1/12', '2/12', '3/12', '4/12', '5/12', '6/12', '7/12', '8/12', '9/12'],
+        datasets: [{
+          label: 'Kadar Air',
+          data: [10.5, 13.2, 13.5, 14.0, 19.0, 14.2, 14.4, 12.8, 13.7, 15.8],
+          backgroundColor: '#807000',
+          borderRadius: 5
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 20,
+            ticks: {
+              callback: value => value + '%'
+            }
+          }
+        }
+      }
+    });
+
+    function updateChart() {
+      // Dummy update, bisa ganti pakai fetch dari server
+      moistureChart.data.datasets[0].data = moistureChart.data.datasets[0].data.map(
+        d => (d + (Math.random() * 2 - 1)).toFixed(1)
+      );
+      moistureChart.update();
+    }
+  </script>
+</body>
+</html>

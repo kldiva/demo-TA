@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home | Rice Moisture Monitoring</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('graphic-node-dm-9lIgr_K0-unsplash.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #2e2e2e;
+    }
+
+    .background-wrapper {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: url('graphic-node-dm-9lIgr_K0-unsplash.jpg') no-repeat center center fixed;
+      background-size: cover;
+      z-index: -2;
+    }
+
+    .overlay {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.4); 
+      z-index: -1;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .sidebar {
+      width: 240px;
+      background-color: #a58b21;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .sidebar .logo {
+      font-weight: bold;
+      font-size: 20px;
+      margin-bottom: 40px;
+      color: #4d0f0f;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #4d0f0f;
+      border-radius: 20px;
+      text-align: left;
+    }
+
+    .sidebar a:hover, .sidebar a.active {
+      background-color: #a03030;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header .user-info {
+      text-align: right;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      color: #1f1f1f;
+    }
+
+    .lokasi-section {
+      margin-top: 10px;
+    }
+
+    .lokasi-card {
+      display: flex;
+      background-color: #807000;
+      border-radius: 15px;
+      padding: 15px;
+      color: white;
+      width: 480px;
+    }
+
+    .lokasi-card img {
+      width: 130px;
+      height: auto;
+      border-radius: 8px;
+      margin-right: 15px;
+    }
+
+    .kadar-air-chart {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      margin-left: 50px;
+    }
+
+    .chart-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .chart-center span {
+      display: block;
+      font-size: 12px;
+      font-weight: normal;
+    }
+
+    .features {
+      display: flex;
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .feature-card {
+      background-color: #a58b21;
+      border-radius: 15px;
+      padding: 10px;
+      width: 200px;
+      text-align: center;
+      color: white;
+    }
+
+    .feature-card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .feature-card button {
+      margin-top: 10px;
+      background-color: #4d0f0f;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- WRAPPER BACKGROUND -->
+  <div class="background-wrapper">
+    <div class="overlay"></div>
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
+      <div class="logo">RM <br><span style="font-weight: normal; font-size: 14px;">Rice Moisture<br>Online Monitoring System</span></div>
+      <a href="2home.html" class="active">🏠 Home</a>
+      <a href="3datasensor.html">📊 Data Sensor</a>
+      <a href="4monitoring.html">📡 Monitoring Langsung</a>
+      <a href="5grafik.html">📈 Grafik dan Laporan</a>
+      <a href="6tentang-1.html">ℹ️ Tentang</a>
+      <a href="1login.html">🚪 Logout</a>
+    </div>
+
+    <div class="main-content">
+      <div class="header">
+        <h1>Sistem Pengukuran Kadar Air Beras</h1>
+        <div class="user-info">
+          <p><strong>User Admin</strong></p>
+          <small>CEO</small>
+        </div>
+      </div>
+
+      <div class="lokasi-section">
+        <h2>Lokasi</h2>
+        <div style="display: flex; align-items: center;">
+          <div class="lokasi-card">
+            <img src="gudang.jpg" alt="Gudang" />
+            <div>
+              <h3>Gudang Penyimpanan Beras Gedebage</h3>
+              <p>Jl. Gedebage Selatan Jl. Margaritna No.19, Cisaranten Kidul, Kec. Cinambo, Kota Bandung, Jawa Barat 40295</p>
+            </div>
+          </div>
+
+          <div class="kadar-air-chart">
+            <canvas id="moistureChart" width="150" height="150"></canvas>
+            <div class="chart-center">
+              13.7%<br />
+              <span>Kadar Air</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="features">
+        <div class="feature-card">
+          <img src="sensor.jpg" alt="Data Sensor">
+          <button onclick="window.location.href='3datasensor.html'">Data Sensor</button>
+        </div>
+        <div class="feature-card">
+          <img src="monitoring.jpg" alt="Monitoring">
+          <button onclick="window.location.href='4monitoring.html'">Monitoring Langsung</button>
+        </div>
+        <div class="feature-card">
+          <img src="grafik.jpg" alt="Grafik">
+          <button onclick="window.location.href='5grafik.html'">Grafik dan Laporan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart Script -->
+  <script>
+    const ctx = document.getElementById('moistureChart').getContext('2d');
+    const moistureValue = 13.7;
+
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Kadar Air', 'Sisa'],
+        datasets: [{
+          data: [moistureValue, 100 - moistureValue],
+          backgroundColor: ['#a58b21', '#e0e0e0'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        cutout: '70%',
+        plugins: {
+          legend: { display: false },
+          tooltip: { enabled: false }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
